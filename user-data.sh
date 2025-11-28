@@ -15,6 +15,6 @@ adduser --disabled-password --gecos "" poweruser
 IPT=$(which iptables)
 echo "poweruser ALL=(root) NOPASSWD: $IPT" >> /etc/sudoers
 
-chmod 700 /home/adminuser 
+sudo setfacl -m u:poweruser:rx /home/adminuser
 
 sudo -u poweruser ln -s /etc/mtab /home/poweruser/mtab_link
