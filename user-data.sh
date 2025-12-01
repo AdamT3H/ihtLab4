@@ -1,6 +1,6 @@
 #!/bin/bash
 
-adduser --disabled-password --gecos "" adminuser
+adduser -s /bin/bash --disabled-password --gecos "" adminuser
 
 usermod -aG sudo adminuser
 
@@ -8,16 +8,16 @@ HASHED=$(echo -n "PASSWORD" | openssl passwd -6 -stdin)
 
 echo "adminuser:$HASHED" | chpasswd -e
 
-adduser --disabled-password --gecos "" poweruser
+adduser -s /bin/bash --gecos "" poweruser
+passwd -d poweruser
 
 IPT=$(which iptables)
-echo "poweruser ALL=(root) NOPASSWD: $IPT" >> /etc/sudoers
+echo "poweruser ALL=(root) NOPASSWD: $IPT" > /etc/sudoers.d/poweruser
 
-groupadd adminshared
-usermod -aG adminshared adminuser
-usermod -aG adminshared poweruser
+chmod 440 /etc/sudoers.d/poweruser
 
-chgrp adminshared /home/adminuser
+usermod -aG adminuser poweruser
+
 chmod 750 /home/adminuser
 
--u poweruser ln -s /etc/mtab /home/poweruser/mtab_link
+ln -s /etc/mtab /home/poweruser/mtab_link
