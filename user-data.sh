@@ -1,7 +1,5 @@
 #!/bin/bash
 
-apt update -y
-
 adduser --disabled-password --gecos "" adminuser
 
 usermod -aG sudo adminuser
