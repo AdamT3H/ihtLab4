@@ -9,6 +9,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --key-name adam-key \
   --security-group-ids sg-01a6b8a9bb5bd52b9 \
   --user-data file://user-data.sh \
+  --iam-instance-profile Name=Mac-ssm-access \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=Task4}]" \
   --query "Instances[0].InstanceId" \
   --output text)
